@@ -27,7 +27,7 @@ Route::controller(HomeController::class)->group(function () {
 
 Route::controller(ClientController::class)->group(function () {
     Route::get('/category{id}/{slug}', 'Category')->name('category');
-    Route::get('/single-product', 'SingleProduct')->name('singleproduct');
+    Route::get('/product-detail/{id}/{slug}', 'SingleProduct')->name('singleproduct');
     Route::get('/add-to-cart', 'AddToCart')->name('addtocart');
     Route::get('/check-out', 'CheckOut')->name('checkout');
     Route::get('/user-profile', 'UserProfile')->name('userprofile');
