@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,11 +32,24 @@ Route::controller(ClientController::class)->group(function () {
     Route::get('/add-to-cart', 'AddToCart')->name('addtocart');
     Route::get('/check-out', 'CheckOut')->name('checkout');
     Route::get('/user-profile', 'UserProfile')->name('userprofile');
-
     Route::get('/new-release', 'NewRelease')->name('newrelease');
     Route::get('/todays-deal', 'TodaysDeal')->name('todaysdeal');
     Route::get('/customer-service', 'CustomerService')->name('customerservice');
+});
 
+Route::middleware(['auth', 'role:user'])->group(function() {
+    Route::controller(ClientController::class)->group(function () {
+        Route::get('/add-to-cart', 'AddToCart')->name('addtocart');
+        Route::get('/check-out', 'CheckOut')->name('checkout');
+        Route::get('/user-profile', 'UserProfile')->name('userprofile');
+        
+        Route::get('/user-profile/pending-orders', 'PendingOrders')->name('pendingorders');
+        Route::get('/user-profile/history', 'History')->name('history');
+
+
+        Route::get('/todays-deal', 'TodaysDeal')->name('todaysdeal');
+        Route::get('/customer-service', 'CustomerService')->name('customerservice');
+    });
 });
 
 Route::get('/dashboard', function () {
@@ -80,18 +94,6 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
         Route::get('/admin/pending-order', 'Index')->name('pendingorder');
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 Route::middleware('auth')->group(function () {
