@@ -29,28 +29,21 @@ Route::controller(HomeController::class)->group(function () {
 Route::controller(ClientController::class)->group(function () {
     Route::get('/category{id}/{slug}', 'Category')->name('category');
     Route::get('/product-detail/{id}/{slug}', 'SingleProduct')->name('singleproduct');
-    Route::get('/add-to-cart', 'AddToCart')->name('addtocart');
-    Route::get('/check-out', 'CheckOut')->name('checkout');
-    Route::get('/user-profile', 'UserProfile')->name('userprofile');
     Route::get('/new-release', 'NewRelease')->name('newrelease');
-    Route::get('/todays-deal', 'TodaysDeal')->name('todaysdeal');
-    Route::get('/customer-service', 'CustomerService')->name('customerservice');
 });
 
-Route::middleware(['auth', 'role:user'])->group(function() {
+// Route::middleware(['auth', 'role:user'])->group(function() {
     Route::controller(ClientController::class)->group(function () {
         Route::get('/add-to-cart', 'AddToCart')->name('addtocart');
+        Route::post('/add-product-to-cart', 'AddProductToCart')->name('addproducttocart');
         Route::get('/check-out', 'CheckOut')->name('checkout');
         Route::get('/user-profile', 'UserProfile')->name('userprofile');
-        
         Route::get('/user-profile/pending-orders', 'PendingOrders')->name('pendingorders');
         Route::get('/user-profile/history', 'History')->name('history');
-
-
         Route::get('/todays-deal', 'TodaysDeal')->name('todaysdeal');
         Route::get('/customer-service', 'CustomerService')->name('customerservice');
     });
-});
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -96,10 +89,10 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 });
 
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__.'/auth.php';
